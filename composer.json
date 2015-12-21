@@ -1,0 +1,18 @@
+{
+	"name": "johnbillion/wp-docs-standards",
+	"description": "Documentation standards for WordPress functions, classes, and methods.",
+	"authors"    : [
+		{
+			"name"    : "John Blackbourn",
+			"homepage": "https://johnblackbourn.com/"
+		}
+	],
+	"require-dev": {
+		"phpdocumentor/reflection-docblock": "~2.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Johnbillion\\WPDocsStandards\\": "src/"
+		}
+	}
+}
