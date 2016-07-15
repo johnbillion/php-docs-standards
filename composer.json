@@ -1,6 +1,7 @@
 {
 	"name": "johnbillion/wp-docs-standards",
 	"description": "Documentation standards for WordPress functions, classes, and methods.",
+	"license"    : "GPL-2.0+",
 	"authors"    : [
 		{
 			"name"    : "John Blackbourn",
