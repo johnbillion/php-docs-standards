@@ -7,7 +7,7 @@
 			"homepage": "https://johnblackbourn.com/"
 		}
 	],
-	"require-dev": {
+	"require": {
 		"phpdocumentor/reflection-docblock": "~2.0"
 	},
 	"autoload": {
