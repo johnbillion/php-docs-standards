@@ -123,7 +123,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @param string|array $function The function name, or array of class name and method name.
 	 */
-	public function testMethodParams( $function, $params ) {
+	public function testMethodParams( $function ) {
 
 		$this->setupFunction( $function );
 
