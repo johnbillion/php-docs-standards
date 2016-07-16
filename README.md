@@ -6,13 +6,13 @@ This abstract PHPUnit test case tests the standards and correctness of the inlin
 
  * The docblock should not be missing.
  * The docblock description should not be empty.
- * The number of @param docs should match the actual number of parameters.
- * The @param description for each parameter should not be empty.
- * The @param name for each parameter should be correct.
- * The @param type hint for each parameter should be correct.
- * The @param description for optional parameters should state that it is optional.
- * The @param description for required parameters should not state that it is optional.
- * The @param description for each parameter should state its default value, where appropriate.
+ * The number of `@param` docs should match the actual number of parameters.
+ * The `@param` description for each parameter should not be empty.
+ * The `@param` name for each parameter should be correct.
+ * The `@param` type hint for each parameter should be correct.
+ * The `@param` description for optional parameters should state that it is optional.
+ * The `@param` description for required parameters should not state that it is optional.
+ * The `@param` description for each parameter should state its default value, where appropriate.
 
 Class-level docblocks are not yet tested.
 
@@ -70,6 +70,11 @@ class TestMyDocsStandards extends \Johnbillion\DocsStandards\TestCase {
 
 }
 ```
+
+## Why is this a unit test instead of a sniffer?
+
+This was originally built to help the WordPress documentation team improve the documentation standards, and at the time
+the fastest way for me to implement it was as a unit test. It could also be a sniffer, if someone wanted to convert it.
 
 ## License: GPLv2 or later ##
 
