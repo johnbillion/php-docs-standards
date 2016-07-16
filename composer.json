@@ -1,6 +1,6 @@
 {
-	"name": "johnbillion/wp-docs-standards",
-	"description": "Documentation standards for WordPress functions, classes, and methods.",
+	"name": "johnbillion/docs-standards",
+	"description": "phpunit tests for documentation standards of PHP functions, classes, and methods.",
 	"license"    : "GPL-2.0+",
 	"authors"    : [
 		{
@@ -13,7 +13,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Johnbillion\\WPDocsStandards\\": "src/"
+			"Johnbillion\\DocsStandards\\": "src/"
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <?php
-namespace Johnbillion\WPDocsStandards;
+namespace Johnbillion\DocsStandards;
 
-abstract class TestCase extends \WP_UnitTestCase {
+abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 	abstract protected function getTestFunctions();
 
