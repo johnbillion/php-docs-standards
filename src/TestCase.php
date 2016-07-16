@@ -105,8 +105,8 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 		$this->setupFunction( $function );
 
-		if ( ! $this->doc_comment || ! $this->docblock->getShortDescription() ) {
-			$this->markTestSkipped( 'Missing docblock' );
+		if ( ! $this->docblock->getShortDescription() ) {
+			$this->markTestSkipped( 'No docblock' );
 		}
 
 		$this->assertSame( count( $this->method_params ), count( $this->doc_params ), sprintf(
@@ -126,6 +126,14 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	public function testMethodParams( $function ) {
 
 		$this->setupFunction( $function );
+
+		if ( ! $this->docblock->getShortDescription() ) {
+			$this->markTestSkipped( 'No docblock' );
+		}
+
+		if ( empty( $this->method_params ) ) {
+			$this->markTestSkipped( 'No method params to test' );
+		}
 
 		foreach ( $this->method_params as $i => $param ) {
 
