@@ -1,7 +1,20 @@
 # PHP Documentation Standards Tests
 
-This abstract PHPUnit test case tests the standards and correctness of the inline documentation of your PHP functions,
-classes, and methods.
+This abstract PHPUnit test case tests the standards and correctness of the inline documentation of your PHP functions and methods.
+
+## What's tested?
+
+ * The docblock should not be missing.
+ * The docblock description should not be empty.
+ * The number of @param docs should match the actual number of parameters.
+ * The @param description for each parameter should not be empty.
+ * The @param name for each parameter should be correct.
+ * The @param type hint for each parameter should be correct.
+ * The @param description for optional parameters should state that it is optional.
+ * The @param description for required parameters should not state that it is optional.
+ * The @param description for each parameter should state its default value, where appropriate.
+
+Class-level docblocks are not yet tested.
 
 ## Installation
 
