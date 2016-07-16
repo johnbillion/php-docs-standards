@@ -3,7 +3,7 @@
 This abstract PHPUnit test case tests the standards and correctness of the inline documentation of your PHP functions,
 classes, and methods.
 
-## Insallation
+## Installation
 
 Add the package to your project's dev dependencies using Composer:
 
@@ -29,7 +29,7 @@ current request. A future version of this test case will use static analysis in 
 ```php
 <?php
 
-class Extended_CPT_Test_Reflection extends \Johnbillion\PHPDocsStandards\TestCase {
+class Extended_CPT_Test_Reflection extends \Johnbillion\DocsStandards\TestCase {
 
 	/**
 	 * Return an array of function names that will be run through the test suite.
