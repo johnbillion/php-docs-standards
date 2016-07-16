@@ -24,7 +24,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	protected $doc_params    = null;
 
 	/**
-	 * Return an array of function names that will be through the test suite.
+	 * Return an array of function names that will be run through the test suite.
 	 *
 	 * @return array Function names to test.
 	 */

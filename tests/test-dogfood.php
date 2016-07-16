@@ -7,7 +7,7 @@ namespace Johnbillion\DocsStandards\Tests;
 class Dogfood extends \Johnbillion\DocsStandards\TestCase {
 
 	/**
-	 * Return an array of function names that will be through the test suite.
+	 * Return an array of function names that will be run through the test suite.
 	 *
 	 * @return array Function names to test.
 	 */
