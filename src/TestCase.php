@@ -97,7 +97,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 			}
 
 			$this->assertFalse( strpos( $param_doc_type, 'callback' ), sprintf(
-				'`callback` is not a valid type. `callable` should be used in the @param type hint for the `%s` parameter of `%s` instead.',
+				'`callback` is not a valid type in the @param type hint for the `%s` parameter of `%s`. `callable` should be used instead.',
 				$param_doc->getVariableName(),
 				$name
 			) );
@@ -149,7 +149,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 		foreach ( $this->getTestFunctions() as $function ) {
 
 			if ( ! function_exists( $function ) ) {
-				$this->fail( sprintf( 'The function `%s` doesn\'t exist.', $function ) );
+				$this->fail( sprintf( 'Function `%s` does not exist.', $function ) );
 			}
 
 			$data[] = array(
@@ -161,7 +161,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 		foreach ( $this->getTestClasses() as $class ) {
 
 			if ( ! class_exists( $class ) ) {
-				$this->fail( sprintf( 'The class `%s` doesn\'t exist.', $class ) );
+				$this->fail( sprintf( 'Class `%s` does not exist.', $class ) );
 			}
 
 			$class_ref = new \ReflectionClass( $class );
