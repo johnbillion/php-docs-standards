@@ -65,6 +65,15 @@ class Docblock extends \PHPUnit_Framework_TestCase {
 
 	}
 
+	/**
+	 * Perform a test that is expected to fail.
+	 *
+	 * @param  string|array $target_function The function name, or array of class name and method name.
+	 * @param  string       $test_method     The TestCase method to perform the test.
+	 * @param  string       $fail_message    The failure message to use if the test unexpectedly passes.
+	 * @param  string       $expected_error  The expected error message.
+	 * @return null
+	 */
 	protected function doFailTest( $target_function, $test_method, $fail_message, $expected_error ) {
 
 		require_once __DIR__ . '/includes/stub-testcase.php';
@@ -99,6 +108,14 @@ class Docblock extends \PHPUnit_Framework_TestCase {
 
 	}
 
+	/**
+	 * Perform a test that is expected to pass.
+	 *
+	 * @param  string|array $target_function The function name, or array of class name and method name.
+	 * @param  string       $test_method     The TestCase method to perform the test.
+	 * @param  string       $fail_message    The failure message to use if the test unexpectedly fails.
+	 * @return null
+	 */
 	protected function doPassTest( $target_function, $test_method, $fail_message ) {
 
 		require_once __DIR__ . '/includes/stub-testcase.php';
