@@ -183,6 +183,10 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 			foreach ( $class_ref->getMethods() as $method_ref ) {
 
+				if ( $method_ref->class !== $class ) {
+					continue;
+				}
+
 				$data[] = array(
 					array(
 						$class,
