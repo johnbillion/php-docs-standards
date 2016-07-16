@@ -1,5 +1,5 @@
 {
-	"name": "johnbillion/docs-standards",
+	"name": "johnbillion/php-docs-standards",
 	"description": "phpunit tests for documentation standards of PHP functions, classes, and methods.",
 	"license"    : "GPL-2.0+",
 	"authors"    : [
