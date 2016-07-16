@@ -29,7 +29,7 @@ current request. A future version of this test case will use static analysis in 
 ```php
 <?php
 
-class Extended_CPT_Test_Reflection extends \Johnbillion\DocsStandards\TestCase {
+class TestMyDocsStandards extends \Johnbillion\DocsStandards\TestCase {
 
 	/**
 	 * Return an array of function names that will be run through the test suite.
