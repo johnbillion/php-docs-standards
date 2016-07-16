@@ -17,56 +17,109 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	public static $param_type_hint_default           = 'The @param description for the `%s` parameter of `%s` should state its default value.';
 	public static $param_type_hint_no_default        = 'The @param description for the `%s` parameter of `%s` should not state a default value.';
 
+	protected $function_name = null;
+	protected $docblock      = null;
+	protected $doc_comment   = null;
+	protected $method_params = null;
+	protected $doc_params    = null;
+
 	abstract protected function getTestFunctions();
 
 	abstract protected function getTestClasses();
 
-	/**
-	 * Test a function or method for a given class
-	 *
-	 * @dataProvider dataReflectionTestFunctions
-	 *
-	 * @param string|array $function The function name, or array of class name and method name.
-	 */
-	public function testFunction( $function ) {
-
-		// We can't pass Reflector objects in here because they get printed out as the
-		// data set when a test fails
+	protected function setupFunction( $function ) {
 
 		if ( is_array( $function ) ) {
 			$ref  = new \ReflectionMethod( $function[0], $function[1] );
-			$name = $function[0] . '::' . $function[1] . '()';
+			$this->function_name = $function[0] . '::' . $function[1] . '()';
 		} else {
 			$ref  = new \ReflectionFunction( $function );
-			$name = $function . '()';
+			$this->function_name = $function . '()';
 		}
 
-		$docblock      = new \phpDocumentor\Reflection\DocBlock( $ref );
-		$doc_comment   = $ref->getDocComment();
-		$method_params = $ref->getParameters();
-		$doc_params    = $docblock->getTagsByName( 'param' );
+		$this->docblock      = new \phpDocumentor\Reflection\DocBlock( $ref );
+		$this->doc_comment   = $ref->getDocComment();
+		$this->method_params = $ref->getParameters();
+		$this->doc_params    = $this->docblock->getTagsByName( 'param' );
 
-		$this->assertNotFalse( $doc_comment, sprintf(
+	}
+
+	/**
+	 * Test for docblock presence for a function or method.
+	 *
+	 * @dataProvider dataTestFunctions
+	 *
+	 * @param string|array $function The function name, or array of class name and method name.
+	 */
+	public function testDocblockIsPresent( $function ) {
+
+		$this->setupFunction( $function );
+
+		$this->assertNotFalse( $this->doc_comment, sprintf(
 			self::$docblock_missing,
-			$name
+			$this->function_name
 		) );
 
-		$this->assertNotEmpty( $docblock->getShortDescription(), sprintf(
+	}
+
+	/**
+	 * Test for docblock description for a function or method.
+	 *
+	 * @dataProvider dataTestFunctions
+	 *
+	 * @param string|array $function The function name, or array of class name and method name.
+	 */
+	public function testDocblockHasDescription( $function ) {
+
+		$this->setupFunction( $function );
+
+		if ( ! $this->doc_comment ) {
+			$this->markTestSkipped( 'Missing docblock' );
+		}
+
+		$this->assertNotEmpty( $this->docblock->getShortDescription(), sprintf(
 			self::$docblock_desc_empty,
-			$name
+			$this->function_name
 		) );
 
-		$this->assertSame( count( $method_params ), count( $doc_params ), sprintf(
+	}
+
+	/**
+	 * Test the docblock params list for a function or method.
+	 *
+	 * @dataProvider dataTestFunctions
+	 *
+	 * @param string|array $function The function name, or array of class name and method name.
+	 */
+	public function testDocblockParams( $function ) {
+
+		$this->setupFunction( $function );
+
+		if ( ! $this->doc_comment || ! $this->docblock->getShortDescription() ) {
+			$this->markTestSkipped( 'Missing docblock' );
+		}
+
+		$this->assertSame( count( $this->method_params ), count( $this->doc_params ), sprintf(
 			self::$param_count_mismatch,
-			$name
+			$this->function_name
 		) );
 
-		// @TODO check description ends in full stop
-		// @TODO tests for @link or @see in descriptions, etc
+	}
 
-		foreach ( $method_params as $i => $param ) {
+	/**
+	 * Test the params of a function or method.
+	 *
+	 * @dataProvider dataTestFunctions
+	 *
+	 * @param string|array $function The function name, or array of class name and method name.
+	 */
+	public function testMethodParams( $function, $params ) {
 
-			$param_doc   = $doc_params[ $i ];
+		$this->setupFunction( $function );
+
+		foreach ( $this->method_params as $i => $param ) {
+
+			$param_doc   = $this->doc_params[ $i ];
 			$description = $param_doc->getDescription();
 			$content     = $param_doc->getContent();
 
@@ -83,7 +136,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 			$this->assertNotEmpty( $description, sprintf(
 				self::$param_desc_empty,
 				$param_doc->getVariableName(),
-				$name
+				$this->function_name
 			) );
 
 			list( $param_doc_type, $param_doc_name ) = preg_split( '#\s+#', $param_doc->getContent() );
@@ -91,14 +144,14 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 			$this->assertSame( '$' . $param->getName(), $param_doc_name, sprintf(
 				self::$param_name_incorrect,
 				'$' . $param->getName(),
-				$name
+				$this->function_name
 			) );
 
 			if ( $param->isArray() ) {
 				$this->assertNotFalse( strpos( $param_doc_type, 'array' ), sprintf(
 					self::$param_type_hint_accept_array,
 					$param_doc->getVariableName(),
-					$name
+					$this->function_name
 				) );
 			}
 
@@ -106,7 +159,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 				$this->assertNotFalse( strpos( $param_doc_type, $param_class->getName() ), sprintf(
 					self::$param_type_hint_accept_object,
 					$param_doc->getVariableName(),
-					$name,
+					$this->function_name,
 					$param_class->getName()
 				) );
 			}
@@ -114,14 +167,14 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 			$this->assertFalse( strpos( $param_doc_type, 'callback' ), sprintf(
 				self::$param_type_hint_disallow_callback,
 				$param_doc->getVariableName(),
-				$name
+				$this->function_name
 			) );
 
 			if ( $param->isCallable() ) {
 				$this->assertNotFalse( strpos( $param_doc_type, 'callable' ), sprintf(
 					self::$param_type_hint_accept_callable,
 					$param_doc->getVariableName(),
-					$name
+					$this->function_name
 				) );
 			}
 
@@ -129,13 +182,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 				$this->assertNotFalse( strpos( $description, 'Optional.' ), sprintf(
 					self::$param_type_hint_optional,
 					$param_doc->getVariableName(),
-					$name
+					$this->function_name
 				) );
 			} else {
 				$this->assertFalse( strpos( $description, 'Optional.' ), sprintf(
 					self::$param_type_hint_not_optional,
 					$param_doc->getVariableName(),
-					$name
+					$this->function_name
 				) );
 			}
 
@@ -143,13 +196,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 				$this->assertNotFalse( strpos( $description, 'Default ' ), sprintf(
 					self::$param_type_hint_default,
 					$param_doc->getVariableName(),
-					$name
+					$this->function_name
 				) );
 			} else {
 				$this->assertFalse( strpos( $description, 'Default ' ), sprintf(
 					self::$param_type_hint_no_default,
 					$param_doc->getVariableName(),
-					$name
+					$this->function_name
 				) );
 			}
 
@@ -157,7 +210,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function dataReflectionTestFunctions() {
+	public function dataTestFunctions() {
 
 		$data = array();
 
