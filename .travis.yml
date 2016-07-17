@@ -13,3 +13,6 @@ php:
 
 install:
     - composer install --dev
+
+script:
+    - ./vendor/bin/phpunit -v
