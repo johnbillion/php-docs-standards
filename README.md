@@ -1,3 +1,6 @@
+[![License](https://img.shields.io/badge/license-GPL_v2%2B-blue.svg?style=flat-square)](http://opensource.org/licenses/GPL-2.0)
+[![Build Status](https://img.shields.io/travis/johnbillion/php-docs-standards/master.svg?style=flat-square)](https://travis-ci.org/johnbillion/php-docs-standards)
+
 # PHP Documentation Standards Tests
 
 This abstract PHPUnit test case tests the standards and correctness of the inline documentation of your PHP functions and methods.
