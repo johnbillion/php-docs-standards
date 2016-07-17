@@ -5,7 +5,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 	public static $docblock_missing                  = 'The docblock for `%s` should not be missing.';
 	public static $docblock_desc_empty               = 'The docblock description for `%s` should not be empty.';
-	public static $param_count_mismatch              = 'The number of @param docs for `%s` should match its number of parameters.';
+	public static $param_count_mismatch              = 'The number of @param docs for `%s` should match the actual number of parameters.';
 	public static $param_desc_empty                  = 'The @param description for the `%s` parameter of `%s` should not be empty.';
 	public static $param_name_incorrect              = 'The @param name for the `%s` parameter of `%s` is incorrect.';
 	public static $param_type_hint_accept_array      = 'The @param type hint for the `%s` parameter of `%s` should state that it accepts an array.';
