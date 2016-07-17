@@ -210,7 +210,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 				) );
 			}
 
-			if ( $param->isDefaultValueAvailable() && ( array() !== $param->getDefaultValue() ) ) {
+			if ( $param->isDefaultValueAvailable() && ( array() !== $param->getDefaultValue() ) && ( null !== $param->getDefaultValue() ) ) {
 				$this->assertNotFalse( strpos( $description, 'Default ' ), sprintf(
 					self::$param_type_hint_default,
 					$param_doc->getVariableName(),
