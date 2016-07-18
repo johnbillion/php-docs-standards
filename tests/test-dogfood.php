@@ -1,6 +1,10 @@
 <?php
 namespace Johnbillion\DocsStandards\Tests;
 
+foreach ( glob( __DIR__ . '/test-*.php' ) as $file ) {
+	require_once $file;
+}
+
 /**
  * Test the tests that test the tests.
  */
@@ -25,6 +29,7 @@ class Dogfood extends \Johnbillion\DocsStandards\TestCase {
 			'\Johnbillion\DocsStandards\TestCase',
 			'\Johnbillion\DocsStandards\Tests\TestCase',
 			__NAMESPACE__ . '\Docblock',
+			__NAMESPACE__ . '\Params',
 			__NAMESPACE__ . '\Dogfood',
 		);
 	}

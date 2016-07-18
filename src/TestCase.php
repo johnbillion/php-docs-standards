@@ -117,6 +117,19 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * A static version of `ReflectionParameter::getName()` that doesn't require the parameter class to be loaded.
+	 *
+	 * This prevents fatal errors when a parameter uses a class name for type hinting but the class is not loaded.
+	 *
+	 * @param  \ReflectionParameter $param The parameter reflection object
+	 * @return string                      The name of the parameter's type hinted object, if there is one.
+	 */
+	protected static function getParameterClassName( \ReflectionParameter $param ) {
+		preg_match( '/\[\s\<\w+?>\s([a-zA-Z0-9_\\\\]+)/s', $param->__toString(), $matches );
+		return isset( $matches[1] ) ? $matches[1] : null;
+	}
+
+	/**
 	 * Test the params of a function or method.
 	 *
 	 * @dataProvider dataTestFunctions
@@ -171,14 +184,14 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 					$param_doc->getVariableName(),
 					$this->function_name
 				) );
-			}
-
-			if ( ( $param_class = $param->getClass() ) && ( 'stdClass' !== $param_class->getName() ) ) {
-				$this->assertNotFalse( strpos( $param_doc_type, $param_class->getName() ), sprintf(
+			} elseif ( ( $param_class = self::getParameterClassName( $param ) ) && ( 'stdClass' !== $param_class ) ) {
+				$namespaces  = explode( '\\', $param_class );
+				$param_class = end( $namespaces );
+				$this->assertNotFalse( strpos( $param_doc_type, $param_class ), sprintf(
 					self::$param_type_hint_accept_object,
 					$param_doc->getVariableName(),
 					$this->function_name,
-					$param_class->getName()
+					$param_class
 				) );
 			}
 
