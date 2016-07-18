@@ -23,6 +23,7 @@ class Dogfood extends \Johnbillion\DocsStandards\TestCase {
 	protected function getTestClasses() {
 		return array(
 			'\Johnbillion\DocsStandards\TestCase',
+			'\Johnbillion\DocsStandards\Tests\TestCase',
 			__NAMESPACE__ . '\Docblock',
 			__NAMESPACE__ . '\Dogfood',
 		);
