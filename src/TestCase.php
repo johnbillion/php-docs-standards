@@ -16,12 +16,18 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	public static $param_type_hint_not_optional      = 'The @param description for the required `%s` parameter of `%s` should not state that it is optional.';
 	public static $param_type_hint_default           = 'The @param description for the `%s` parameter of `%s` should state its default value.';
 	public static $param_type_hint_no_default        = 'The @param description for the `%s` parameter of `%s` should not state a default value.';
+	public static $since_missing_for_function        = 'The @since doc for the `%s` function should not be missing.';
+	public static $since_empty_for_function          = 'The @since doc for the `%s` function should not be empty.';
+	public static $since_missing_for_method          = 'The @since doc for the public `%s` method should not be missing.';
+	public static $since_empty_for_method            = 'The @since doc for the public `%s` method should not be empty.';
 
-	protected $function_name = null;
-	protected $docblock      = null;
-	protected $doc_comment   = null;
-	protected $method_params = null;
-	protected $doc_params    = null;
+	protected $function_name      = null;
+	protected $function_is_method = null;
+	protected $function_is_public = null;
+	protected $docblock           = null;
+	protected $doc_comment        = null;
+	protected $method_params      = null;
+	protected $doc_params         = null;
 
 	/**
 	 * Return an array of function names that will be run through the test suite.
@@ -42,9 +48,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 		if ( is_array( $function ) ) {
 			$ref  = new \ReflectionMethod( $function[0], $function[1] );
 			$this->function_name = $function[0] . '::' . $function[1] . '()';
+			$this->function_is_method = true;
+			$this->function_is_public = $ref->isPublic();
 		} else {
 			$ref  = new \ReflectionFunction( $function );
 			$this->function_name = $function . '()';
+			$this->function_is_method = false;
+			$this->function_is_public = true;
 		}
 
 		$this->docblock      = new \phpDocumentor\Reflection\DocBlock( $ref );
@@ -237,6 +247,44 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 				) );
 			}
 
+		}
+
+	}
+
+	/**
+	 * Test the since doc of a function or public method.
+	 *
+	 * @dataProvider dataTestFunctions
+	 * @requires testDocblockIsPresent
+	 *
+	 * @param string|array $function The function name, or array of class name and method name.
+	 */
+	public function testSinceDocIsPresentAndHasDescription( $function ) {
+
+		$this->setupFunction( $function );
+
+		if ( ! $this->function_is_public ) {
+			$this->markTestSkipped( 'No function or public method' );
+		}
+
+		$since_docs = $this->docblock->getTagsByName( 'since' );
+
+		$message = $this->function_is_method ? self::$since_missing_for_method : self::$since_missing_for_function;
+
+		$this->assertNotEmpty( count( $since_docs ), sprintf(
+			$message,
+			$this->function_name
+		) );
+
+		$message = $this->function_is_method ? self::$since_empty_for_method : self::$since_empty_for_function;
+
+		foreach ( $since_docs as $since_doc ) {
+			// Trim spaces, and remove leading "@since " from doc
+			$since_doc = substr( trim( $since_doc ), 7 );
+			$this->assertNotEmpty( $since_doc, sprintf(
+				$message,
+				$this->function_name
+			) );
 		}
 
 	}
