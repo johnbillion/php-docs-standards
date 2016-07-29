@@ -1,6 +1,9 @@
 <?php
 namespace Johnbillion\DocsStandards\Tests;
 
+/**
+ * @requires PHP 5.4
+ */
 class TestCase extends \PHPUnit_Framework_TestCase {
 
 	/**

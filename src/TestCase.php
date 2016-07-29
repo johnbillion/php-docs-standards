@@ -1,6 +1,9 @@
 <?php
 namespace Johnbillion\DocsStandards;
 
+/**
+ * @requires PHP 5.4
+ */
 abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 	public static $docblock_missing                  = 'The docblock for `%s` should not be missing.';
