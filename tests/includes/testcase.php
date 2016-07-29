@@ -17,8 +17,6 @@ class TestCase extends \PHPUnit_Framework_TestCase {
 	 */
 	protected function doFailTest( $target_function, $test_method, $fail_message, $expected_error ) {
 
-		require_once __DIR__ . '/stub-testcase.php';
-
 		$case = new Stub_TestCase;
 
 		try {
@@ -58,8 +56,6 @@ class TestCase extends \PHPUnit_Framework_TestCase {
 	 * @return null
 	 */
 	protected function doPassTest( $target_function, $test_method, $fail_message ) {
-
-		require_once __DIR__ . '/stub-testcase.php';
 
 		$case = new Stub_TestCase;
 

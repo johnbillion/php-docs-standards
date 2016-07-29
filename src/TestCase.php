@@ -262,7 +262,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 		foreach ( $this->getTestClasses() as $class ) {
 
-			if ( ! class_exists( $class ) ) {
+			if ( ! class_exists( $class, true ) && ! trait_exists( $class, true ) ) {
 				$this->fail( sprintf( 'Class `%s` does not exist.', $class ) );
 			}
 
