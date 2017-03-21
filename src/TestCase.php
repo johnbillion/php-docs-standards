@@ -129,7 +129,22 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	 */
 	protected static function getParameterClassName( \ReflectionParameter $param ) {
 		preg_match( '/\[\s\<\w+?>\s([a-zA-Z0-9_\\\\]+)/s', $param->__toString(), $matches );
-		return isset( $matches[1] ) ? $matches[1] : null;
+		if ( ! isset( $matches[1] ) ) {
+			return '';
+		}
+
+		switch ( $matches[1] ) {
+			// Allows the shorthand 'bool' type hint:
+			case 'boolean':
+				return 'bool';
+				break;
+			// Allows the shorthand 'int' type hint:
+			case 'integer':
+				return 'int';
+				break;
+		}
+
+		return $matches[1];
 	}
 
 	/**
