@@ -15,5 +15,8 @@ php:
 install:
     - composer install --dev
 
+before_script:
+    - phpenv config-rm xdebug.ini
+
 script:
     - ./vendor/bin/phpunit -v
