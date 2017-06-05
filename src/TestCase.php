@@ -163,7 +163,8 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 		}
 
 		if ( empty( $this->method_params ) ) {
-			$this->markTestSkipped( 'No method params to test' );
+			$this->assertEmpty( $this->doc_params );
+			return;
 		}
 
 		foreach ( $this->method_params as $i => $param ) {
