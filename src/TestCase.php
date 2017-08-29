@@ -198,7 +198,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 			) );
 
 			if ( $param->isArray() ) {
-				$this->assertNotFalse( strpos( $param_doc_type, 'array' ), sprintf(
+				$this->assertRegexp( '/(array|\[\])/', $param_doc_type, sprintf(
 					self::$param_type_hint_accept_array,
 					$param_doc->getVariableName(),
 					$this->function_name
