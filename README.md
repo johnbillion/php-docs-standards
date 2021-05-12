@@ -17,9 +17,14 @@ This abstract PHPUnit test case tests the standards and correctness of the inlin
  * The `@param` description for required parameters should not state that it is optional.
  * The `@param` description for each parameter should state its default value, where appropriate.
 
-Class-level docblocks are not yet tested.
+Class-level docblocks are not tested.
 
 ## Installation
+
+Requirements:
+
+ * PHP 7 or 8
+ * PHPUnit 7 or higher
 
 Add the package to your project's dev dependencies using Composer:
 
@@ -39,8 +44,7 @@ Add a new test class to your test suite that extends the docs standards test cas
 be implemented are `getTestFunctions()` and `getTestClasses()`. These methods return an array of function names and
 class names, respectively, which are to be run through the test suite to test their documentation standards.
 
-In the current version of the test case, the functions and classes must be loaded (or available for autoloading) in the
-current request. A future version of this test case will use static analysis in order to remove this requirement.
+The functions and classes must be loaded (or available for autoloading) in the current request.
 
 ```php
 <?php
