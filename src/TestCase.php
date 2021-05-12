@@ -2,7 +2,7 @@
 namespace Johnbillion\DocsStandards;
 
 /**
- * @requires PHP 5.4
+ * @requires PHP 7.0
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
@@ -197,7 +197,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 				$this->function_name
 			) );
 
-			if ( $param->isArray() ) {
+			if ( $param->getType() && $param->getType()->getName() === 'array' ) {
 				$this->assertRegexp( '/(array|\[\])/', $param_doc_type, sprintf(
 					self::$param_type_hint_accept_array,
 					$param_doc->getVariableName(),
@@ -220,7 +220,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 				$this->function_name
 			) );
 
-			if ( $param->isCallable() ) {
+			if ( $param->getType() && $param->getType()->getName() === 'callable' ) {
 				$this->assertNotFalse( strpos( $param_doc_type, 'callable' ), sprintf(
 					self::$param_type_hint_accept_callable,
 					$param_doc->getVariableName(),
