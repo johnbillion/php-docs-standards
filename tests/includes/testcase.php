@@ -2,9 +2,9 @@
 namespace Johnbillion\DocsStandards\Tests;
 
 /**
- * @requires PHP 5.4
+ * @requires PHP 7.0
  */
-class TestCase extends \PHPUnit_Framework_TestCase {
+class TestCase extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * Perform a test that is expected to fail.
@@ -23,7 +23,7 @@ class TestCase extends \PHPUnit_Framework_TestCase {
 
 			call_user_func( array( $case, $test_method ), $target_function );
 
-		} catch ( \PHPUnit_Framework_ExpectationFailedException $e ) {
+		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
 
 			$expected = sprintf(
 				$expected_error,

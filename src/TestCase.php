@@ -4,7 +4,7 @@ namespace Johnbillion\DocsStandards;
 /**
  * @requires PHP 7.0
  */
-abstract class TestCase extends \PHPUnit_Framework_TestCase {
+abstract class TestCase extends \PHPUnit\Framework\TestCase {
 
 	public static $docblock_missing                  = 'The docblock for `%s` should not be missing.';
 	public static $docblock_desc_empty               = 'The docblock description for `%s` should not be empty.';
