@@ -1,22 +1,24 @@
-# run on container environment
-sudo: false
-
-language: php
+language: "php"
+os:
+  - "linux"
+# 18.04 Bionic: PHP 7.1 - 8.0
+dist: "bionic"
 
 notifications:
     on_success: change
     on_failure: always
 
 php:
-    - 8.0
-    - 7.4
-    - 7.1
+    - "7.4"
+    - "7.1"
 
-install:
-    - composer install --dev --ignore-platform-reqs
+jobs:
+  include:
+    - php: "8.0"
+      install: composer update --dev --ignore-platform-reqs
 
-before_script:
-    - phpenv config-rm xdebug.ini
+before_install: phpenv config-rm xdebug.ini
 
-script:
-    - ./vendor/bin/phpunit -v
+install: composer update --dev
+
+script: vendor/bin/phpunit -v
