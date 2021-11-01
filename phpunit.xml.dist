@@ -9,7 +9,7 @@
 	beStrictAboutOutputDuringTests="true"
 	>
 	<testsuites>
-		<testsuite>
+		<testsuite name="php-docs-standards">
 			<directory prefix="test-" suffix=".php">./tests/</directory>
 		</testsuite>
 	</testsuites>
