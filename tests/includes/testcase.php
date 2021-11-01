@@ -33,14 +33,6 @@ class TestCase extends \PHPUnit\Framework\TestCase {
 
 			return;
 
-		} catch( \Exception $e ) {
-
-			$this->fail( sprintf(
-				"Unexpected exception '%s' with message '%s'",
-				get_class( $e ),
-				$e->getMessage()
-			) );
-
 		}
 
 		$this->fail( $fail_message );
@@ -68,14 +60,6 @@ class TestCase extends \PHPUnit\Framework\TestCase {
 			$this->fail( sprintf(
 				"%s: Unexpected failure with message '%s'",
 				$fail_message,
-				$e->getMessage()
-			) );
-
-		} catch( \Exception $e ) {
-
-			$this->fail( sprintf(
-				"Unexpected exception '%s' with message '%s'",
-				get_class( $e ),
 				$e->getMessage()
 			) );
 
