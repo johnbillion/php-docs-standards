@@ -13,7 +13,7 @@ php:
     - 7.1
 
 install:
-    - composer install --dev --ignore-platform-reqs
+    - composer install --dev
 
 before_script:
     - phpenv config-rm xdebug.ini
