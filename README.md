@@ -29,7 +29,7 @@ Requirements:
 Add the package to your project's dev dependencies using Composer:
 
 ```bash
-composer require johnbillion/php-docs-standards:~2.0 --dev
+composer require johnbillion/php-docs-standards --dev
 ```
 
 In your unit test bootstrap file, include the Composer autoloader. This will look something like this:
