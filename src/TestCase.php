@@ -171,7 +171,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 
 			$param_doc   = $this->doc_params[ $i ];
 			$description = $param_doc->getDescription();
-			$content     = $param_doc->getContent();
 
 			// @TODO decide how to handle variadic functions
 			// ReflectionParameter::isVariadic — Checks if the parameter is variadic
