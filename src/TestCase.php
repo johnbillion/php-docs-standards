@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use ReflectionClass;
 use ReflectionFunction;
 use ReflectionMethod;
+use ReflectionParameter;
 
 /**
  * @requires PHP 7.0
