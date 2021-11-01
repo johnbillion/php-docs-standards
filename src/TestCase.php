@@ -1,10 +1,17 @@
 <?php
+
 namespace Johnbillion\DocsStandards;
+
+use phpDocumentor\Reflection\DocBlockFactory;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use ReflectionClass;
+use ReflectionFunction;
+use ReflectionMethod;
 
 /**
  * @requires PHP 7.0
  */
-abstract class TestCase extends \PHPUnit\Framework\TestCase {
+abstract class TestCase extends PHPUnitTestCase {
 
 	public static $docblock_missing                  = 'The docblock for `%s` should not be missing.';
 	public static $docblock_desc_empty               = 'The docblock description for `%s` should not be empty.';
@@ -43,10 +50,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 	protected function setupFunction( $function ) {
 
 		if ( is_array( $function ) ) {
-			$ref  = new \ReflectionMethod( $function[0], $function[1] );
+			$ref  = new ReflectionMethod( $function[0], $function[1] );
 			$this->function_name = $function[0] . '::' . $function[1] . '()';
 		} else {
-			$ref  = new \ReflectionFunction( $function );
+			$ref  = new ReflectionFunction( $function );
 			$this->function_name = $function . '()';
 		}
 
@@ -56,7 +63,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 			return;
 		}
 
-		$factory = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
+		$factory = DocBlockFactory::createInstance();
 
 		$this->docblock      = $factory->create( $ref );
 		$this->method_params = $ref->getParameters();
@@ -134,7 +141,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 	 * @param  \ReflectionParameter $param The parameter reflection object
 	 * @return string                      The name of the parameter's type hinted object, if there is one.
 	 */
-	protected static function getParameterClassName( \ReflectionParameter $param ) {
+	protected static function getParameterClassName( ReflectionParameter $param ) {
 		preg_match( '/\[\s\<\w+?>\s([a-zA-Z0-9_\\\\]+)/s', $param->__toString(), $matches );
 		if ( ! isset( $matches[1] ) ) {
 			return '';
@@ -288,7 +295,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 				$this->fail( sprintf( 'Class `%s` does not exist.', $class ) );
 			}
 
-			$class_ref = new \ReflectionClass( $class );
+			$class_ref = new ReflectionClass( $class );
 
 			foreach ( $class_ref->getMethods() as $method_ref ) {
 
