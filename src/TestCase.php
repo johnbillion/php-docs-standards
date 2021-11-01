@@ -50,8 +50,15 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 			$this->function_name = $function . '()';
 		}
 
-		$this->docblock      = new \phpDocumentor\Reflection\DocBlock( $ref );
-		$this->doc_comment   = $ref->getDocComment();
+		$this->doc_comment = $ref->getDocComment();
+
+		if ( ! $this->doc_comment ) {
+			return;
+		}
+
+		$factory = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
+
+		$this->docblock      = $factory->create( $ref );
 		$this->method_params = $ref->getParameters();
 		$this->doc_params    = $this->docblock->getTagsByName( 'param' );
 
@@ -90,7 +97,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 			$this->markTestSkipped( 'Missing docblock' );
 		}
 
-		$this->assertNotEmpty( $this->docblock->getShortDescription(), sprintf(
+		$this->assertNotEmpty( $this->docblock->getSummary(), sprintf(
 			self::$docblock_desc_empty,
 			$this->function_name
 		) );
@@ -108,7 +115,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 
 		$this->setupFunction( $function );
 
-		if ( ! $this->docblock->getShortDescription() ) {
+		if ( ! $this->docblock->getSummary() ) {
 			$this->markTestSkipped( 'No docblock' );
 		}
 
@@ -158,7 +165,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 
 		$this->setupFunction( $function );
 
-		if ( ! $this->docblock->getShortDescription() ) {
+		if ( ! $this->docblock->getSummary() ) {
 			$this->markTestSkipped( 'No docblock' );
 		}
 
@@ -188,7 +195,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase {
 				$this->function_name
 			) );
 
-			list( $param_doc_type, $param_doc_name ) = preg_split( '#\s+#', $param_doc->getContent() );
+			list( $param_doc_type, $param_doc_name ) = preg_split( '#\s+#', $param_doc->__toString() );
 
 			$this->assertSame( '$' . $param->getName(), $param_doc_name, sprintf(
 				self::$param_name_incorrect,
